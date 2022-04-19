@@ -28,31 +28,28 @@ BORDER = pygame.Rect((SCREEN_WIDTH / 2) -5, 0, 10, SCREEN_HEIGHT)
 
 
 
-def draw_window():
+def draw_window(color):
     SCREEN.fill(BACKGROUND_COLOR)
-    pygame.draw.rect(SCREEN,WHITE, pygame.Rect(130, 130, 200, 200))
+    pygame.draw.rect(SCREEN, color, pygame.Rect(130, 130, 200, 200))
     generate_random_color()   
     pygame.display.update()
 
     
  
 def generate_random_color():
-     red = random.randrange(0,256)
-     green = random.randrange(0,256)
-     blue = random.randrange(0,256)
-     randomColor = "Red, {} Green, {} Blue {}"
-    #  print(randomColor.format(red, green, blue))
+     random_value = random.randrange(0,256)
+     return random_value
     
 def main():
 
-    
+    color = (generate_random_color(), generate_random_color(), generate_random_color())
     run = True
     while run:
         CLOCK.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False  
-            draw_window()
+            draw_window(color)
                 
     pygame.quit()
     sys.exit()
