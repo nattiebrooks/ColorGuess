@@ -13,9 +13,12 @@ pygame.display.set_caption("Color Guessing Game!")
 # Defaults for the game
 BACKGROUND_COLOR = (5,163,251)
 RECT_COLOR = (14,16,18)
-RECT_WIDTH = 100
-RECT_HEIGHT = 100
+RECT_WIDTH = 150
+RECT_HEIGHT = 150
 RECT_SPACE = 50
+
+RECT_ROW_ONE_Y = 150
+RECT_ROW_TWO_Y = 350
 
 NUMBER_OF_SQUARES = 6
 BLUE = (0, 0, 255)
@@ -27,7 +30,17 @@ FONT = pygame.font.SysFont(None, 32)
 TILE_FIELD = FONT.render(GAME_TITLE, True, WHITE)
 TILE_X = 450
 TILE_Y = 50
+
+GAME_INSTRUCTIONS = 'Instructions here'
+INSTRUCTIONS_X = 800
+INSTRCUTIONS_Y = 150
+INSTRUCTIONS_FIELD = FONT.render(GAME_INSTRUCTIONS, True,WHITE)
 # BACKGROUND_IMAGE = pygame.image.load(os.path.join('assets', 'background.png'))
+
+COLOR_TO_GUESS = ""
+COLOR_TO_GUESS_X = 800
+COLOR_TO_GUESS_Y = 300
+COLOR_TO_GUESS_FIELD = FONT.render(COLOR_TO_GUESS, True, WHITE)
 FPS = 60
 
 BORDER = pygame.Rect((SCREEN_WIDTH / 2) -5, 0, 10, SCREEN_HEIGHT)
@@ -35,16 +48,20 @@ BORDER = pygame.Rect((SCREEN_WIDTH / 2) -5, 0, 10, SCREEN_HEIGHT)
 
 
 def draw_window(color, color2, color3, color4, color5, color6):
+    COLOR_TO_GUESS_FIELD = FONT.render(str(color6), True, WHITE)
+    
     SCREEN.fill(BACKGROUND_COLOR)
     SCREEN.blit(TILE_FIELD, (TILE_X, TILE_Y))
-    pygame.draw.rect(SCREEN, color, pygame.Rect(140, 100, RECT_WIDTH, RECT_HEIGHT))
-    pygame.draw.rect(SCREEN, color2, pygame.Rect(300, 100, RECT_WIDTH, RECT_HEIGHT))
-    pygame.draw.rect(SCREEN, color3, pygame.Rect(460, 100, RECT_WIDTH, RECT_HEIGHT))
+    SCREEN.blit(INSTRUCTIONS_FIELD, (INSTRUCTIONS_X,INSTRCUTIONS_Y))
+    SCREEN.blit(COLOR_TO_GUESS_FIELD, (COLOR_TO_GUESS_X,COLOR_TO_GUESS_Y))
+    pygame.draw.rect(SCREEN, color, pygame.Rect(140, RECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT))
+    pygame.draw.rect(SCREEN, color2, pygame.Rect(320, RECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT))
+    pygame.draw.rect(SCREEN, color3, pygame.Rect(500, RECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT))
     
     
-    pygame.draw.rect(SCREEN, color4, pygame.Rect(140, 300, RECT_WIDTH, RECT_HEIGHT))
-    pygame.draw.rect(SCREEN, color5, pygame.Rect(300, 300, RECT_WIDTH, RECT_HEIGHT))
-    pygame.draw.rect(SCREEN, color6, pygame.Rect(460, 300, RECT_WIDTH, RECT_HEIGHT))
+    pygame.draw.rect(SCREEN, color4, pygame.Rect(140, RECT_ROW_TWO_Y, RECT_WIDTH, RECT_HEIGHT))
+    pygame.draw.rect(SCREEN, color5, pygame.Rect(320, RECT_ROW_TWO_Y, RECT_WIDTH, RECT_HEIGHT))
+    pygame.draw.rect(SCREEN, color6, pygame.Rect(500, RECT_ROW_TWO_Y, RECT_WIDTH, RECT_HEIGHT))
     
     pygame.display.update()
 
@@ -80,7 +97,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False     
-            draw_window(color, color2, color3, color4, color5, color6)
+            draw_window(color, color2, color3, color4, color5, color)
                 
     pygame.quit()
     sys.exit()
