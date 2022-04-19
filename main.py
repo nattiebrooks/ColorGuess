@@ -1,4 +1,5 @@
 import pygame, sys, os
+import random
 
 #Pygame setup
 pygame.font.init()
@@ -30,11 +31,17 @@ BORDER = pygame.Rect((SCREEN_WIDTH / 2) -5, 0, 10, SCREEN_HEIGHT)
 def draw_window():
     SCREEN.fill(BACKGROUND_COLOR)
     pygame.draw.rect(SCREEN,WHITE, pygame.Rect(130, 130, 200, 200))
-        
+    generate_random_color()   
     pygame.display.update()
 
     
  
+def generate_random_color():
+     red = random.randrange(0,256)
+     green = random.randrange(0,256)
+     blue = random.randrange(0,256)
+     randomColor = "Red, {} Green, {} Blue {}"
+    #  print(randomColor.format(red, green, blue))
     
 def main():
 
