@@ -10,6 +10,7 @@ SCREEN = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 CLOCK = pygame.time.Clock()
 pygame.display.set_caption("Color Guessing Game!")
 
+
 # Defaults for the game
 BACKGROUND_COLOR = (5,163,251)
 RECT_COLOR = (14,16,18)
@@ -96,7 +97,10 @@ def main():
         CLOCK.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False     
+                run = False    
+            x,y = pygame.mouse.get_pos()
+            # print the 'absolute' mouse position (relative to the screen)
+            print ('absoulte:', x,y)
             draw_window(color, color2, color3, color4, color5, color)
                 
     pygame.quit()
