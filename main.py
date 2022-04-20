@@ -102,6 +102,10 @@ def main():
             # print the 'absolute' mouse position (relative to the screen)
             print ('absoulte:', x,y)
             draw_window(color, color2, color3, color4, color5, color)
+            handled = False
+            if pygame.mouse.get_pressed()[0] and not handled:
+                print("click!")
+                handled = pygame.mouse.get_pressed()[0]
                 
     pygame.quit()
     sys.exit()
