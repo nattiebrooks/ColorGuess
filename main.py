@@ -10,7 +10,6 @@ SCREEN = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 CLOCK = pygame.time.Clock()
 pygame.display.set_caption("Color Guessing Game!")
 
-
 # Defaults for the game
 BACKGROUND_COLOR = (5,163,251)
 RECT_COLOR = (14,16,18)
@@ -20,6 +19,16 @@ RECT_SPACE = 50
 
 RECT_ROW_ONE_Y = 150
 RECT_ROW_TWO_Y = 350
+
+
+rect1 = pygame.Rect(140, RECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT)
+rect2 = pygame.Rect(320, RECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT)
+rect3 = pygame.Rect(500, RECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT)
+
+
+rect4 = pygame.Rect(140, RECT_ROW_TWO_Y, RECT_WIDTH, RECT_HEIGHT)
+rect5 = pygame.Rect(320, RECT_ROW_TWO_Y, RECT_WIDTH, RECT_HEIGHT)
+rect6 = pygame.Rect(500, RECT_ROW_TWO_Y, RECT_WIDTH, RECT_HEIGHT)
 
 NUMBER_OF_SQUARES = 6
 BLUE = (0, 0, 255)
@@ -55,14 +64,14 @@ def draw_window(color, color2, color3, color4, color5, color6):
     SCREEN.blit(TILE_FIELD, (TILE_X, TILE_Y))
     SCREEN.blit(INSTRUCTIONS_FIELD, (INSTRUCTIONS_X,INSTRCUTIONS_Y))
     SCREEN.blit(COLOR_TO_GUESS_FIELD, (COLOR_TO_GUESS_X,COLOR_TO_GUESS_Y))
-    pygame.draw.rect(SCREEN, color, pygame.Rect(140, RECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT))
-    pygame.draw.rect(SCREEN, color2, pygame.Rect(320, RECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT))
-    pygame.draw.rect(SCREEN, color3, pygame.Rect(500, RECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT))
     
+    pygame.draw.rect(SCREEN, color, rect1)
+    pygame.draw.rect(SCREEN, color2, rect2)
+    pygame.draw.rect(SCREEN, color3, rect3)
     
-    pygame.draw.rect(SCREEN, color4, pygame.Rect(140, RECT_ROW_TWO_Y, RECT_WIDTH, RECT_HEIGHT))
-    pygame.draw.rect(SCREEN, color5, pygame.Rect(320, RECT_ROW_TWO_Y, RECT_WIDTH, RECT_HEIGHT))
-    pygame.draw.rect(SCREEN, color6, pygame.Rect(500, RECT_ROW_TWO_Y, RECT_WIDTH, RECT_HEIGHT))
+    pygame.draw.rect(SCREEN, color4, rect4)
+    pygame.draw.rect(SCREEN, color5, rect5)
+    pygame.draw.rect(SCREEN, color6, rect6)
     
     pygame.display.update()
 
@@ -81,7 +90,18 @@ def create_all_colors():
 def generate_random_color():
      random_value = random.randrange(0,256)
      return random_value
-    
+
+def mouse_clicks_square():
+    x,y = pygame.mouse.get_pos()
+    # print ('absolute:', x,y)
+    # if x > rect1.width/2 and y > rect1.height/2:
+    squares = [rect1, rect2, rect3, rect4, rect5, rect6]
+    for square in squares:
+        if pygame.Rect.collidepoint(square, (x,y)):
+            print('square clicked')
+            print(square)
+            
+        
 def main():
     
     color = (generate_random_color(), generate_random_color(), generate_random_color())
@@ -98,13 +118,16 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False    
-            x,y = pygame.mouse.get_pos()
+            # x,y = pygame.mouse.get_pos()
             # print the 'absolute' mouse position (relative to the screen)
-            print ('absoulte:', x,y)
+            # print ('absoulte:', x,y)
             draw_window(color, color2, color3, color4, color5, color)
             handled = False
             if pygame.mouse.get_pressed()[0] and not handled:
-                print("click!")
+                # print('click!')
+                # if pygame.Rect.collidepoint(pygame.mouse.get_pos()):
+                    # print('rect clicked')
+                mouse_clicks_square()
                 handled = pygame.mouse.get_pressed()[0]
                 
     pygame.quit()
