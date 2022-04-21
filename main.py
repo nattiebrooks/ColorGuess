@@ -131,12 +131,6 @@ def main():
     color6 = (generate_random_color(), generate_random_color(), generate_random_color())
     
     colors = [color1, color2, color3, color4, color5, color6]
-    # rect1.fill(color1)
-    # rect2.fill(color2)
-    # rect3.fill(color3)
-    # rect4.fill(color4)
-    # rect5.fill(color5)
-    # rect6.fill(color6)
     
     run = True
     while run:
@@ -144,15 +138,10 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False    
-            # x,y = pygame.mouse.get_pos()
-            # print the 'absolute' mouse position (relative to the screen)
-            # print ('absoulte:', x,y)
+
             draw_window(color1, color2, color3, color4, color5, color6, color_to_guess,colors)
             handled = False
             if pygame.mouse.get_pressed()[0] and not handled:
-                # print('click!')
-                # if pygame.Rect.collidepoint(pygame.mouse.get_pos()):
-                    # print('rect clicked')
                 mouse_clicks_square(colors)
                 handled = pygame.mouse.get_pressed()[0]
                 
