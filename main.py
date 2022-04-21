@@ -20,15 +20,18 @@ RECT_SPACE = 50
 RECT_ROW_ONE_Y = 150
 RECT_ROW_TWO_Y = 350
 
+x1 = 140
+x2 = 320
+x3 = 500
 
-rect1 = pygame.Rect(140, RECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT)
-rect2 = pygame.Rect(320, RECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT)
-rect3 = pygame.Rect(500, RECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT)
+rect1 = pygame.Rect(x1, RECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT)
+rect2 = pygame.Rect(x2, RECT_ROW_TWO_Y, RECT_WIDTHRECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT)
+rect3 = pygame.Rect(x3, RECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT)
 
+rect4 = pygame.Rect(x1, RECT_ROW_TWO_Y, RECT_WIDTH, RECT_HEIGHT)
+rect5 = pygame.Rect(x2, RECT_ROW_TWO_Y, RECT_WIDTH, RECT_HEIGHT)
+rect6 = pygame.Rect(x3, RECT_ROW_TWO_Y, RECT_WIDTH, RECT_HEIGHT)
 
-rect4 = pygame.Rect(140, RECT_ROW_TWO_Y, RECT_WIDTH, RECT_HEIGHT)
-rect5 = pygame.Rect(320, RECT_ROW_TWO_Y, RECT_WIDTH, RECT_HEIGHT)
-rect6 = pygame.Rect(500, RECT_ROW_TWO_Y, RECT_WIDTH, RECT_HEIGHT)
 
 NUMBER_OF_SQUARES = 6
 BLUE = (0, 0, 255)
@@ -55,18 +58,22 @@ FPS = 60
 
 BORDER = pygame.Rect((SCREEN_WIDTH / 2) -5, 0, 10, SCREEN_HEIGHT)
 
+color_to_guess = random.randrange(0,6)
+
+squares = [rect1, rect2, rect3, rect4, rect5, rect6]
 
 
-def draw_window(color, color2, color3, color4, color5, color6):
-    COLOR_TO_GUESS_FIELD = FONT.render(str(color6), True, WHITE)
+def draw_window(color1, color2, color3, color4, color5, color6, color_to_guess, colors):
+    
+    
+    COLOR_TO_GUESS_FIELD = FONT.render(str(colors[color_to_guess]), True, WHITE)
     
     SCREEN.fill(BACKGROUND_COLOR)
     SCREEN.blit(TILE_FIELD, (TILE_X, TILE_Y))
-    # SCREEN.blit(INSTRUCTIONS_FIELD, (INSTRUCTIONS_X,INSTRCUTIONS_Y))
     render_multi_line(GAME_INSTRUCTIONS, INSTRUCTIONS_X, INSTRCUTIONS_Y, 18 ,WHITE)
     SCREEN.blit(COLOR_TO_GUESS_FIELD, (COLOR_TO_GUESS_X,COLOR_TO_GUESS_Y))
     
-    pygame.draw.rect(SCREEN, color, rect1)
+    pygame.draw.rect(SCREEN, color1, rect1)
     pygame.draw.rect(SCREEN, color2, rect2)
     pygame.draw.rect(SCREEN, color3, rect3)
     
@@ -74,11 +81,12 @@ def draw_window(color, color2, color3, color4, color5, color6):
     pygame.draw.rect(SCREEN, color5, rect5)
     pygame.draw.rect(SCREEN, color6, rect6)
     
+
     pygame.display.update()
 
     
 def create_all_colors():
-    color = (generate_random_color(), generate_random_color(), generate_random_color())
+    color1 = (generate_random_color(), generate_random_color(), generate_random_color())
     color2 = (generate_random_color(), generate_random_color(), generate_random_color())
     color3 = (generate_random_color(), generate_random_color(), generate_random_color())
     
@@ -86,22 +94,24 @@ def create_all_colors():
     color5 = (generate_random_color(), generate_random_color(), generate_random_color())
     color6 = (generate_random_color(), generate_random_color(), generate_random_color())
     
-    return color,color2, color3,color4, color5,color6
-
+    
 def generate_random_color():
      random_value = random.randrange(0,256)
      return random_value
 
-def mouse_clicks_square():
+def mouse_clicks_square(colors):
     x,y = pygame.mouse.get_pos()
-    # print ('absolute:', x,y)
-    # if x > rect1.width/2 and y > rect1.height/2:
-    squares = [rect1, rect2, rect3, rect4, rect5, rect6]
+    pixel_col = pygame.Surface.get_at(SCREEN, (x, y))
+    print(pixel_col)
     for square in squares:
         if pygame.Rect.collidepoint(square, (x,y)):
             print('square clicked')
-            print(square)
-            square.size = (0,0)
+            if(pixel_col == colors[color_to_guess]):
+                print(square)
+                SCREEN.fill(colors[color_to_guess])
+                # pygame.display.update()
+            else:
+                square.size = (0,0)
   
 
 def render_multi_line(text, x, y, fsize,color):
@@ -112,13 +122,21 @@ def render_multi_line(text, x, y, fsize,color):
         
 def main():
     
-    color = (generate_random_color(), generate_random_color(), generate_random_color())
+    color1 = (generate_random_color(), generate_random_color(), generate_random_color())
     color2 = (generate_random_color(), generate_random_color(), generate_random_color())
     color3 = (generate_random_color(), generate_random_color(), generate_random_color())
     
     color4 = (generate_random_color(), generate_random_color(), generate_random_color())
     color5 = (generate_random_color(), generate_random_color(), generate_random_color())
     color6 = (generate_random_color(), generate_random_color(), generate_random_color())
+    
+    colors = [color1, color2, color3, color4, color5, color6]
+    # rect1.fill(color1)
+    # rect2.fill(color2)
+    # rect3.fill(color3)
+    # rect4.fill(color4)
+    # rect5.fill(color5)
+    # rect6.fill(color6)
     
     run = True
     while run:
@@ -129,13 +147,13 @@ def main():
             # x,y = pygame.mouse.get_pos()
             # print the 'absolute' mouse position (relative to the screen)
             # print ('absoulte:', x,y)
-            draw_window(color, color2, color3, color4, color5, color)
+            draw_window(color1, color2, color3, color4, color5, color6, color_to_guess,colors)
             handled = False
             if pygame.mouse.get_pressed()[0] and not handled:
                 # print('click!')
                 # if pygame.Rect.collidepoint(pygame.mouse.get_pos()):
                     # print('rect clicked')
-                mouse_clicks_square()
+                mouse_clicks_square(colors)
                 handled = pygame.mouse.get_pressed()[0]
                 
     pygame.quit()
