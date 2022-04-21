@@ -25,7 +25,7 @@ x2 = 320
 x3 = 500
 
 rect1 = pygame.Rect(x1, RECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT)
-rect2 = pygame.Rect(x2, RECT_ROW_TWO_Y, RECT_WIDTHRECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT)
+rect2 = pygame.Rect(x2, RECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT)
 rect3 = pygame.Rect(x3, RECT_ROW_ONE_Y, RECT_WIDTH, RECT_HEIGHT)
 
 rect4 = pygame.Rect(x1, RECT_ROW_TWO_Y, RECT_WIDTH, RECT_HEIGHT)
@@ -49,6 +49,7 @@ INSTRUCTIONS_X = 800
 INSTRCUTIONS_Y = 150
 INSTRUCTIONS_FIELD = FONT.render(GAME_INSTRUCTIONS, True,WHITE)
 # BACKGROUND_IMAGE = pygame.image.load(os.path.join('assets', 'background.png'))
+WINNER_FONT = pygame.font.SysFont('comicsans', 100)
 
 COLOR_TO_GUESS = ""
 COLOR_TO_GUESS_X = 800
@@ -109,7 +110,9 @@ def mouse_clicks_square(colors):
             if(pixel_col == colors[color_to_guess]):
                 print(square)
                 SCREEN.fill(colors[color_to_guess])
-                # pygame.display.update()
+                pygame.display.update()
+                draw_winner_text(str(colors[color_to_guess]))
+                break
             else:
                 square.size = (0,0)
   
@@ -119,7 +122,13 @@ def render_multi_line(text, x, y, fsize,color):
         for i, l in enumerate(lines):
             SCREEN.blit(FONT.render(l, 0, color), (x, y + fsize*i))
                   
-        
+def draw_winner_text(text):
+    draw_text = WINNER_FONT.render(text, 1, WHITE)
+    SCREEN.blit(draw_text, (SCREEN_WIDTH/2 - draw_text.get_width() /
+                         2, SCREEN_HEIGHT/2 - draw_text.get_height()/2))  
+    pygame.display.update()
+    pygame.time.delay(5000)
+         
 def main():
     
     color1 = (generate_random_color(), generate_random_color(), generate_random_color())
