@@ -101,6 +101,7 @@ def mouse_clicks_square():
         if pygame.Rect.collidepoint(square, (x,y)):
             print('square clicked')
             print(square)
+            square.size = (0,0)
   
 
 def render_multi_line(text, x, y, fsize,color):
