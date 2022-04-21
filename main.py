@@ -41,7 +41,7 @@ TILE_FIELD = FONT.render(GAME_TITLE, True, WHITE)
 TILE_X = 450
 TILE_Y = 50
 
-GAME_INSTRUCTIONS = 'Instructions here'
+GAME_INSTRUCTIONS = '''Instructions:\nGuess which square is the color of\nthe rgb code listed below. Guessing\ncorrectly will color the background\nthe same color as the square.'''
 INSTRUCTIONS_X = 800
 INSTRCUTIONS_Y = 150
 INSTRUCTIONS_FIELD = FONT.render(GAME_INSTRUCTIONS, True,WHITE)
@@ -62,7 +62,8 @@ def draw_window(color, color2, color3, color4, color5, color6):
     
     SCREEN.fill(BACKGROUND_COLOR)
     SCREEN.blit(TILE_FIELD, (TILE_X, TILE_Y))
-    SCREEN.blit(INSTRUCTIONS_FIELD, (INSTRUCTIONS_X,INSTRCUTIONS_Y))
+    # SCREEN.blit(INSTRUCTIONS_FIELD, (INSTRUCTIONS_X,INSTRCUTIONS_Y))
+    render_multi_line(GAME_INSTRUCTIONS, INSTRUCTIONS_X, INSTRCUTIONS_Y, 18 ,WHITE)
     SCREEN.blit(COLOR_TO_GUESS_FIELD, (COLOR_TO_GUESS_X,COLOR_TO_GUESS_Y))
     
     pygame.draw.rect(SCREEN, color, rect1)
@@ -100,7 +101,13 @@ def mouse_clicks_square():
         if pygame.Rect.collidepoint(square, (x,y)):
             print('square clicked')
             print(square)
-            
+  
+
+def render_multi_line(text, x, y, fsize,color):
+        lines = text.splitlines()
+        for i, l in enumerate(lines):
+            SCREEN.blit(FONT.render(l, 0, color), (x, y + fsize*i))
+                  
         
 def main():
     
