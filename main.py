@@ -103,16 +103,15 @@ def generate_random_color():
 def mouse_clicks_square(colors):
     x,y = pygame.mouse.get_pos()
     pixel_col = pygame.Surface.get_at(SCREEN, (x, y))
-    print(pixel_col)
     for square in squares:
         if pygame.Rect.collidepoint(square, (x,y)):
-            print('square clicked')
             if(pixel_col == colors[color_to_guess]):
-                print(square)
                 SCREEN.fill(colors[color_to_guess])
                 pygame.display.update()
                 draw_winner_text(str(colors[color_to_guess]))
-                break
+                reset_squares(squares)
+                main()
+                
             else:
                 square.size = (0,0)
   
@@ -128,7 +127,11 @@ def draw_winner_text(text):
                          2, SCREEN_HEIGHT/2 - draw_text.get_height()/2))  
     pygame.display.update()
     pygame.time.delay(5000)
-         
+       
+def reset_squares(squares):
+    for square in squares:
+        square.size = (RECT_WIDTH,RECT_HEIGHT)   
+              
 def main():
     
     color1 = (generate_random_color(), generate_random_color(), generate_random_color())
